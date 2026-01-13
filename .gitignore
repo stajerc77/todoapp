@@ -1,4 +1,14 @@
-todoapp/
+# Virtual envoronment
+.venv/
+venv/
+
+# Python cache
 __pycache__/
 *.pyc
+*.pyo
+
+# Config files
 *.cfg
+
+# Database files
+*.db
