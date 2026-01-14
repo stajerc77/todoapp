@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Edit Task</h2>
+<form method="POST" action="/tasks/{{ task.id }}/update">
+    <input type="hidden" name="id" value="{{ task.id }}">
+    <div class="mb-3">
+        <input type="text" class="form-control" name="title" value="{{ task.title }}" required>
+    </div>
+    <button class="btn btn-primary">Save</button>
+    <a href="/" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

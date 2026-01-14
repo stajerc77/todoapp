@@ -35,8 +35,10 @@
                 {% endif %}
             </td>
             <td>
-                <a href="/tasks/{{ task.id }}/edit" class="btn btn-sm btn-outline-primary">Edit</a>
-                <a href="/tasks/{{ task.id }}/delete" class="btn btn-sm btn-outline-danger">Delete</a>
+                <a href="/tasks/{{ task.id }}/edit" class="btn btn-sm btn-outline-primary me-1">Edit</a>
+                <form method="POST" action="/tasks/{{ task.id }}/delete" style="display: inline;">
+                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete?')">Delete</button>
+                </form>
             </td>
         </tr>
         {% endfor %}

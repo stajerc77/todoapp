@@ -110,3 +110,19 @@ async def delete_task(task_id: int, db: Session = Depends(get_db)):
         db.delete(task)
         db.commit()
     return RedirectResponse(url="/", status_code=303)
+
+
+@app.get("/tasks/{task_id}/edit", response_class=HTMLResponse)
+async def edit_form(task_id: int, request: Request, db: Session = Depends(get_db)):
+    task = db.query(models.Task).filter(models.Task.id == task_id).first()
+    if not task:
+        return RedirectResponse(url="/", status_code=303)
+    return templates.TemplateResponse("edit.html", {"request": request, "task": task})
+
+@app.post("/tasks/{task_id}/update")
+async def update_task(task_id: int, title: str = Form(...), db: Session = Depends(get_db)):
+    task = db.query(models.Task).filter(models.Task.id == task_id).first()
+    if task:
+        task.title = title
+        db.commit()
+    return RedirectResponse(url="/", status_code=303)
