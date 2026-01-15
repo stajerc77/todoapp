@@ -10,7 +10,11 @@ class TaskBase(BaseModel):
     due_date: Optional[datetime] = None
 
 class TaskCreate(TaskBase):
-    pass
+    title: str
+    priority: int = 1
+    status: str = "pending"
+    description: Optional[str] = None
+    due_date: Optional[datetime] = None
 
 class TaskUpdate(BaseModel):
     title: Optional[str] = None

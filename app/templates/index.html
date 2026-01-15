@@ -14,13 +14,13 @@
                 </div>
                 <div class="col-md-4">
                     <select class="form-control mb-2" name="priority">
-                        <option value="1">Priority 1</option>
-                        <option value="2" selected>Priority 2</option>
+                        <option value="1" selected>Priority 1</option>
+                        <option value="2">Priority 2</option>
                         <option value="3">Priority 3</option>
                         <option value="4">Priority 4</option>
                         <option value="5">Priority 5</option>
                     </select>
-                </div>
+                </div>    
             </div>
             <div class="row">
                 <div class="col-md-8">
@@ -62,19 +62,19 @@
                 </span>
             </td>
             <td>
-                {% if task.completed %}
+                {% if task.completed == True %}
                     <span class="badge bg-success">Completed</span>
-                {% elif task.priority >= 3 %}
-                    <span class="badge bg-warning">In Progress</span>
+                {% elif task.completed == None %}
+                    <span class="badge bg-warning text-dark">In Progress</span>
                 {% else %}
                     <span class="badge bg-secondary">Pending</span>
-                {% endif %}
+    {% endif %}
             </td>
             <td>
                 {% if task.created_at %}
                     {{ task.created_at.strftime('%m/%d') }}
                 {% else %}
-                    No Start Date
+                    No start date provided
                 {% endif %}
             </td>
             <td>
@@ -83,7 +83,7 @@
                     {% if task.is_overdue %}<span class="badge bg-danger ms-1">Overdue</span>
                 {% endif %}
                 {% else %}
-                    No dates
+                    No end date provided
                 {% endif %}
             </td>
             <td>

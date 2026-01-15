@@ -108,6 +108,7 @@ async def add_task(title: str = Form(...),
                    due_date: Optional[str] = Form(None),
                    db: Session = Depends(get_db)
                    ):
+    
     task_data = schemas.TaskCreate(
         title=title,
         priority=priority,
@@ -139,6 +140,7 @@ async def update_task_page(
     task_id: int,
     title: str = Form(...),
     priority: Optional[int] = Form(1),
+    status: str = Form("pending"),
     description: Optional[str] = Form(None),
     due_date: Optional[str] = Form(None),
     completed: Optional[bool] = Form(False),
@@ -146,12 +148,13 @@ async def update_task_page(
 ):
     task = db.query(models.Task).filter(models.Task.id == task_id).first()
     if task:
+        status_map = {"pending": False, "in-progress": None, "completed": True}
         task.title = title
         task.priority = priority
         task.description = description
         if due_date:
             task.due_date = datetime.fromisoformat(due_date + ":00") if due_date else None
-        task.completed = completed
+        task.completed = status_map[status]
         db.commit()
     return RedirectResponse("/", status_code=303)
 
@@ -163,3 +166,17 @@ async def toggle_task_status(task_id: int, db: Session = Depends(get_db)):
         task.completed = not task.completed
         db.commit()
     return RedirectResponse(url="/", status_code=303)
+
+
+@app.patch("/tasks/{task_id}/status")
+async def update_status(task_id: int, status_data: dict, db: Session = Depends(get_db)):
+    task = crud.get_task(db, task_id)
+    status_map = {
+        "pending": False,
+        "in-progress": None, 
+        "completed": True
+    }
+    task.completed = status_map[status_data["status"]]
+    db.commit()
+    db.refresh(task)
+    return {"message": "Status updated"}

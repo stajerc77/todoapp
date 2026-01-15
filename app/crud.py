@@ -1,8 +1,22 @@
+from datetime import datetime
 from sqlalchemy.orm import Session
 from . import models, schemas
 
 def create_task(db: Session, task: schemas.TaskCreate):
-    db_task = models.Task(**task.dict())
+    task_data = task.dict(exclude_unset=True)
+    status_map = {
+        "pending": False,
+        "in-progress": None,
+        "completed": True
+    }
+
+    db_task = models.Task(
+        title=task_data["title"],
+        priority=task_data["priority"],
+        description=task_data.get("description"),
+        due_date=task.due_date,
+        completed=status_map.get(task.status, False)
+        )
     db.add(db_task)
     db.commit()
     db.refresh(db_task)
