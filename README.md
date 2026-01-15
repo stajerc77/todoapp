@@ -5,7 +5,7 @@ Full-stack task management app built with FastAPI, SQLAlchemy, and Bootstrap. Pr
 ## Features
 - Full CRUD - Create, Read, Update, Delete tasks
 - Timeline view - Start date (created_at) + Due date columns
-- Priority badges - P1 (red) to P5 (green)
+- Priority badges - P1 (blue) to P5 (red)
 - Status toggle - Pending ↔ Completed with badges
 - Overdue detection - Red badge when past due date
 - Responsive design - Works on mobile/desktop
