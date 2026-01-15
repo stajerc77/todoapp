@@ -43,6 +43,8 @@ todo-app/
 │   ├── schemas.py       # Pydantic schemas
 │   ├── crud.py          # Database operations
 │   └── templates/       # Jinja2 HTML
+        └── base.html
+        └── edit.html
 │       └── index.html
 ├── requirements.txt
 └── todo.db             # SQLite database
